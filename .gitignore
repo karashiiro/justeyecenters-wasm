@@ -4,3 +4,6 @@
 !.yarn/sdks
 !.yarn/versions
 .pnp.*
+
+lib/
+node_modules/

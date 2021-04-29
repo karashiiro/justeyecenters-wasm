@@ -5,5 +5,11 @@
   "main": "index.js",
   "repository": "https://github.com/karashiiro/justeyecenters-wasm.git",
   "author": "karashiiro <49822414+karashiiro@users.noreply.github.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "build:wasm": "cross-env GOARCH=wasm GOOS=js go build -o lib/lib.wasm main.go"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
 }
