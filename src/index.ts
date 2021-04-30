@@ -1,4 +1,5 @@
 import "./wasm_exec";
+import jec from "./lib.wasm";
 
 declare class Go {
     importObject: any;
@@ -26,20 +27,17 @@ if (!WebAssembly.instantiateStreaming) {
 
 const go = new Go();
 
-let mod: WebAssembly.Module;
 let inst: WebAssembly.Instance;
 
-const wasmLoad = WebAssembly.instantiateStreaming(fetch("__justeyecenters.wasm"), go.importObject)
-    .then((result) => {
-        mod = result.module;
-        inst = result.instance;
+const wasmLoad = jec()
+    .then((instance) => {
+        inst = instance;
     })
     .catch(console.error);
 
 const init = (async () => {
     await wasmLoad;
     await go.run(inst!);
-    inst = await WebAssembly.instantiate(mod!, go.importObject);
 })();
 
 export async function getEyeCenter(frame: string, bounds: Rect): Promise<{ x: number; y: number; }> {
