@@ -29,7 +29,7 @@ const go = new Go();
 let mod: WebAssembly.Module;
 let inst: WebAssembly.Instance;
 
-const wasmLoad = WebAssembly.instantiateStreaming(fetch("lib.wasm"), go.importObject)
+const wasmLoad = WebAssembly.instantiateStreaming(fetch("__justeyecenters.wasm"), go.importObject)
     .then((result) => {
         mod = result.module;
         inst = result.instance;
