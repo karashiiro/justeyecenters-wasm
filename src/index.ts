@@ -1,8 +1,21 @@
-import { Go } from "./wasm_exec";
+import "./wasm_exec";
+
+declare class Go {
+    importObject: any;
+
+    run(inst: WebAssembly.Instance): Promise<any>;
+};
 
 declare namespace __justeyecenters {
-    function getEyeCenter(image: string): Promise<string>;
+    function getEyeCenter(args: { image: string; bounds: { left: number; top: number; right: number; bottom: number; } }): Promise<string>;
 };
+
+export interface Rect {
+	left: number;
+	top: number;
+	right: number;
+	bottom: number;
+}
 
 if (!WebAssembly.instantiateStreaming) {
     WebAssembly.instantiateStreaming = async (resp, importObject) => {
@@ -29,7 +42,10 @@ const init = (async () => {
     inst = await WebAssembly.instantiate(mod!, go.importObject);
 })();
 
-export async function getEyeCenter(image: string): Promise<any> {
+export async function getEyeCenter(frame: string, bounds: Rect): Promise<{ x: number; y: number; }> {
     await init;
-    return await __justeyecenters.getEyeCenter(image);
+    return JSON.parse(await __justeyecenters.getEyeCenter({
+        image: frame,
+        bounds,
+    }));
 }
