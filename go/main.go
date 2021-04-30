@@ -22,7 +22,7 @@ type predictEyeCenterArgs struct {
 	} `json:"bounds"`
 }
 
-func predictEyeCenter(value js.Value, args []js.Value) interface{} {
+func getEyeCenter(value js.Value, args []js.Value) interface{} {
 	eyeCenterArgs := predictEyeCenterArgs{}
 	err := json.Unmarshal([]byte(value.String()), &eyeCenterArgs)
 	if err != nil {
@@ -76,6 +76,10 @@ func predictEyeCenter(value js.Value, args []js.Value) interface{} {
 
 func main() {
 	c := make(chan struct{})
-	js.Global().Set("predictEyeCenter", js.FuncOf(predictEyeCenter))
+
+	js.Global().Set("__justeyecenters", js.ValueOf(map[string]interface{}{
+		"getEyeCenter": js.FuncOf(getEyeCenter),
+	}))
+
 	<-c
 }
