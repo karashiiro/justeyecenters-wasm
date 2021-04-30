@@ -1,6 +1,6 @@
 {
   "name": "justeyecenters",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Real-time detection of eye centers from a cropped image.",
   "main": "lib/index.js",
   "repository": "https://github.com/karashiiro/justeyecenters-wasm.git",
@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc && cp src/wasm_exec.js lib/",
-    "build:wasm": "cross-env GOARCH=wasm GOOS=js go build -o lib/lib.wasm go/main.go",
+    "build:wasm": "cross-env GOARCH=wasm GOOS=js go build -o lib/__justeyecenters.wasm go/main.go",
     "prepublish": "yarn build && yarn build:wasm"
   },
   "files": [
