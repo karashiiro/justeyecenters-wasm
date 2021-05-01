@@ -13,7 +13,7 @@ import (
 )
 
 type predictEyeCenterArgs struct {
-	Image  string
+	Image  []byte
 	Bounds struct {
 		Left   int
 		Top    int
@@ -26,7 +26,7 @@ func getEyeCenter(this js.Value, args []js.Value) interface{} {
 	startTime := time.Now()
 
 	eyeCenterArgs := predictEyeCenterArgs{
-		Image: args[0].String(),
+		Image: make([]byte, args[0].Length()),
 		Bounds: struct {
 			Left   int
 			Top    int
@@ -40,9 +40,13 @@ func getEyeCenter(this js.Value, args []js.Value) interface{} {
 		},
 	}
 
+	for i := 0; i < len(eyeCenterArgs.Image); i++ {
+		eyeCenterArgs.Image[i] = byte(args[0].Index(i).Int())
+	}
+
 	// Preprocess the frame
 	var imgBuf bytes.Buffer
-	imgBuf.WriteString(eyeCenterArgs.Image)
+	imgBuf.Write(eyeCenterArgs.Image)
 	img, err := png.Decode(&imgBuf)
 	if err != nil {
 		fmt.Println("Error while decoding PNG image\n\t", err)
