@@ -50,6 +50,6 @@ const init = (async () => {
 export async function getEyeCenter(frame: string, bounds: Rect): Promise<{ x: number; y: number; }> {
     await init;
     return JSON.parse(
-        await __justeyecenters.getEyeCenter(atob(frame.substr("data:image/png;base64,".length)), bounds.left, bounds.top, bounds.right, bounds.bottom)
+        await __justeyecenters.getEyeCenter(atob(frame), bounds.left, bounds.top, bounds.right, bounds.bottom)
     );
 }
