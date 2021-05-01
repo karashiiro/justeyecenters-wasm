@@ -84,7 +84,7 @@ func getEyeCenter(this js.Value, args []js.Value) interface{} {
 		return ""
 	}
 
-	fmt.Println("Algorithm time:\n\t", time.Since(startTime).Seconds(), "\n\tFull time:\n\t", fEndTime.Seconds())
+	fmt.Println("Algorithm time:\n\t", fEndTime.Seconds(), "\n\tFull time:\n\t", time.Since(startTime).Seconds())
 
 	return string(retBytes)
 }
