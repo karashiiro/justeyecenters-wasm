@@ -8,6 +8,7 @@ import (
 	"image"
 	"image/png"
 	"syscall/js"
+	"time"
 
 	"github.com/karashiiro/justeyecenters"
 )
@@ -23,6 +24,8 @@ type predictEyeCenterArgs struct {
 }
 
 func getEyeCenter(this js.Value, args []js.Value) interface{} {
+	startTime := time.Now()
+
 	eyeCenterArgs := predictEyeCenterArgs{
 		Image: args[0].String(),
 		Bounds: struct {
@@ -78,6 +81,8 @@ func getEyeCenter(this js.Value, args []js.Value) interface{} {
 		fmt.Println("Error while marshalling return value\n\t", err)
 		return ""
 	}
+
+	fmt.Println(time.Since(startTime).Microseconds())
 
 	return string(retBytes)
 }
