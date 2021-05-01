@@ -40,6 +40,7 @@ const init = (async () => {
     if (inst == null) {
         try {
             inst = await WebAssembly.instantiate(mod!, go.importObject);
+            go.run(inst);
         } catch (err) {
             console.error(err);
         }
