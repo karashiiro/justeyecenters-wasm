@@ -26,14 +26,14 @@ func getEyeCenter(value js.Value, args []js.Value) interface{} {
 	eyeCenterArgs := predictEyeCenterArgs{}
 	err := json.Unmarshal([]byte(value.String()), &eyeCenterArgs)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Error while unmarshalling arguments\n\t", err)
 		return ""
 	}
 
 	// Preprocess the frame
 	rawImage, err := base64.StdEncoding.DecodeString(eyeCenterArgs.Image[len("data:image/png;base64,"):])
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Error while decoding base64 image\n\t", err)
 		return ""
 	}
 
@@ -41,7 +41,7 @@ func getEyeCenter(value js.Value, args []js.Value) interface{} {
 	imgBuf.Write(rawImage)
 	img, err := png.Decode(&imgBuf)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Error while decoding PNG image\n\t", err)
 		return ""
 	}
 
@@ -52,7 +52,7 @@ func getEyeCenter(value js.Value, args []js.Value) interface{} {
 	// Calculate the eye center location
 	center, err := justeyecenters.GetEyeCenter(croppedImg)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Error while calculating eye center\n\t", err)
 		return ""
 	}
 
@@ -67,7 +67,7 @@ func getEyeCenter(value js.Value, args []js.Value) interface{} {
 
 	retBytes, err := json.Marshal(ret)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Error while marshalling return value\n\t", err)
 		return ""
 	}
 
