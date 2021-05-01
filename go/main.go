@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"image"
@@ -41,8 +42,14 @@ func getEyeCenter(this js.Value, args []js.Value) interface{} {
 	}
 
 	// Preprocess the frame
+	rawImage, err := base64.StdEncoding.DecodeString(eyeCenterArgs.Image[len("data:image/png;base64,"):])
+	if err != nil {
+		fmt.Println("Error while decoding base64 image\n\t", err)
+		return ""
+	}
+
 	var imgBuf bytes.Buffer
-	imgBuf.WriteString(eyeCenterArgs.Image)
+	imgBuf.Write(rawImage)
 	img, err := png.Decode(&imgBuf)
 	if err != nil {
 		fmt.Println("Error while decoding PNG image\n\t", err)
