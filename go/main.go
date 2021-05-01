@@ -61,11 +61,13 @@ func getEyeCenter(this js.Value, args []js.Value) interface{} {
 	}).SubImage(image.Rect(eyeCenterArgs.Bounds.Left, eyeCenterArgs.Bounds.Top, eyeCenterArgs.Bounds.Right, eyeCenterArgs.Bounds.Bottom))
 
 	// Calculate the eye center location
+	fStartTime := time.Now()
 	center, err := justeyecenters.GetEyeCenter(croppedImg)
 	if err != nil {
 		fmt.Println("Error while calculating eye center\n\t", err)
 		return ""
 	}
+	fEndTime := time.Since(fStartTime)
 
 	// Put the output in our interop struct
 	ret := &struct {
@@ -82,7 +84,7 @@ func getEyeCenter(this js.Value, args []js.Value) interface{} {
 		return ""
 	}
 
-	fmt.Println(time.Since(startTime).Microseconds())
+	fmt.Println("Algorithm time:\n\t", time.Since(startTime).Seconds(), "\n\tFull time:\n\t", fEndTime.Seconds())
 
 	return string(retBytes)
 }
