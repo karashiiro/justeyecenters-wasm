@@ -28,9 +28,9 @@ if (!WebAssembly.instantiateStreaming) {
 const go = new Go();
 
 let inst: WebAssembly.Instance;
-
 const wasmLoad = jec()
-    .then((instance: WebAssembly.Instance) => {
+    .then((_: WebAssembly.Module, instance: WebAssembly.Instance) => {
+        console.log(instance);
         inst = instance;
     })
     .catch(console.error);
