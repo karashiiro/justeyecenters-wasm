@@ -7,5 +7,5 @@ export default {
         dir: "lib",
         format: "cjs",
     },
-    plugins:[typescript(), wasm()]
+    plugins:[typescript(), wasm({ sync: ["src/lib.wasm"] })]
 };
