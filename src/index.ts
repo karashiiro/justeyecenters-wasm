@@ -30,7 +30,7 @@ const go = new Go();
 let inst: WebAssembly.Instance;
 
 const wasmLoad = jec()
-    .then((instance) => {
+    .then((instance: WebAssembly.Instance) => {
         inst = instance;
     })
     .catch(console.error);
