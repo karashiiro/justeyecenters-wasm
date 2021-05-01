@@ -42,7 +42,7 @@ func getEyeCenter(this js.Value, args []js.Value) interface{} {
 
 	// Preprocess the frame
 	var imgBuf bytes.Buffer
-	imgBuf.Write([]byte(eyeCenterArgs.Image))
+	imgBuf.WriteString(eyeCenterArgs.Image)
 	img, err := png.Decode(&imgBuf)
 	if err != nil {
 		fmt.Println("Error while decoding PNG image\n\t", err)
