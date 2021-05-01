@@ -1,6 +1,6 @@
 {
   "name": "justeyecenters",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Real-time detection of eye centers from a cropped image.",
   "main": "lib/index.js",
   "repository": "https://github.com/karashiiro/justeyecenters-wasm.git",
