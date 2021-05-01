@@ -1,4 +1,4 @@
-package justeyecenters_wasm
+package main
 
 import (
 	"bytes"
