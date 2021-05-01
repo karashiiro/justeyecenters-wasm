@@ -22,11 +22,11 @@ type predictEyeCenterArgs struct {
 	} `json:"bounds"`
 }
 
-func getEyeCenter(value js.Value, args []js.Value) interface{} {
+func getEyeCenter(this js.Value, args []js.Value) interface{} {
 	eyeCenterArgs := predictEyeCenterArgs{}
-	err := json.Unmarshal([]byte(value.String()), &eyeCenterArgs)
+	err := json.Unmarshal([]byte(args[0].String()), &eyeCenterArgs)
 	if err != nil {
-		fmt.Println("Error while unmarshalling arguments\n\t", err, "\n\tArguments: ", value.String())
+		fmt.Println("Error while unmarshalling arguments\n\t", err)
 		return ""
 	}
 
