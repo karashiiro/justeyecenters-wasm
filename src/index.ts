@@ -27,17 +27,23 @@ if (!WebAssembly.instantiateStreaming) {
 
 const go = new Go();
 
-let inst: WebAssembly.Instance;
+let inst: WebAssembly.Instance | undefined;
+let mod: WebAssembly.Module | undefined;
 const wasmLoad = jec()
-    .then((_: WebAssembly.Module, instance: WebAssembly.Instance) => {
-        console.log(instance);
-        inst = instance;
+    .then((wasmModule: WebAssembly.Module) => {
+        mod = wasmModule;
     })
     .catch(console.error);
 
 const init = (async () => {
     await wasmLoad;
-    await go.run(inst!);
+    if (inst == null) {
+        try {
+            inst = await WebAssembly.instantiate(mod!, go.importObject);
+        } catch (err) {
+            console.error(err);
+        }
+    }
 })();
 
 export async function getEyeCenter(frame: string, bounds: Rect): Promise<{ x: number; y: number; }> {
