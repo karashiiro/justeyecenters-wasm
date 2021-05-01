@@ -13,21 +13,29 @@ import (
 )
 
 type predictEyeCenterArgs struct {
-	Image  string `json:"image"`
+	Image  string
 	Bounds struct {
-		Left   int `json:"left"`
-		Top    int `json:"top"`
-		Right  int `json:"right"`
-		Bottom int `json:"bottom"`
-	} `json:"bounds"`
+		Left   int
+		Top    int
+		Right  int
+		Bottom int
+	}
 }
 
 func getEyeCenter(this js.Value, args []js.Value) interface{} {
-	eyeCenterArgs := predictEyeCenterArgs{}
-	err := json.Unmarshal([]byte(args[0].String()), &eyeCenterArgs)
-	if err != nil {
-		fmt.Println("Error while unmarshalling arguments\n\t", err)
-		return ""
+	eyeCenterArgs := predictEyeCenterArgs{
+		Image: args[0].String(),
+		Bounds: struct {
+			Left   int
+			Top    int
+			Right  int
+			Bottom int
+		}{
+			Left:   args[1].Int(),
+			Top:    args[2].Int(),
+			Right:  args[3].Int(),
+			Bottom: args[4].Int(),
+		},
 	}
 
 	// Preprocess the frame

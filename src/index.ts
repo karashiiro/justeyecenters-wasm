@@ -8,7 +8,7 @@ declare class Go {
 };
 
 declare namespace __justeyecenters {
-    function getEyeCenter(args: string): Promise<string>;
+    function getEyeCenter(frame: string, left: number, top: number, right: number, bottom: number): Promise<string>;
 };
 
 export interface Rect {
@@ -49,8 +49,7 @@ const init = (async () => {
 
 export async function getEyeCenter(frame: string, bounds: Rect): Promise<{ x: number; y: number; }> {
     await init;
-    return JSON.parse(await __justeyecenters.getEyeCenter(JSON.stringify({
-        image: frame,
-        bounds,
-    })));
+    return JSON.parse(
+        await __justeyecenters.getEyeCenter(frame, bounds.left, bounds.top, bounds.right, bounds.bottom)
+    );
 }
