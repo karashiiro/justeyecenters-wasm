@@ -26,7 +26,7 @@ func getEyeCenter(value js.Value, args []js.Value) interface{} {
 	eyeCenterArgs := predictEyeCenterArgs{}
 	err := json.Unmarshal([]byte(value.String()), &eyeCenterArgs)
 	if err != nil {
-		fmt.Println("Error while unmarshalling arguments\n\t", err)
+		fmt.Println("Error while unmarshalling arguments\n\t", err, "\n\tArguments: ", value.String())
 		return ""
 	}
 
